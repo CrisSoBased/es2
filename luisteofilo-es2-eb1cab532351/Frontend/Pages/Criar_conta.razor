@@ -1,4 +1,9 @@
 ﻿@page "/Criar_conta"
+@using System.Net.Http
+@using System.Text
+@using Microsoft.AspNetCore.Components.Routing
+@using System.Text.Json
+
 
 <h3>Criar Conta</h3>
 
@@ -23,25 +28,56 @@
     public Conta novaConta { get; set; } = new Conta();
     public string confirmPassword { get; set; }
 
+    [Inject]
+    public HttpClient HttpClient { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
     public class Conta
     {
         public string UserName { get; set; }
         public string Password { get; set; }
     }
 
-    private void CriarConta()
+    private async Task CriarConta()
     {
         if (novaConta.Password == confirmPassword)
         {
-    // Aqui você pode adicionar a lógica para criar a conta do usuário
-    // Por exemplo, usando um serviço de acesso a dados ou uma chamada de API
-    // Você pode acessar os valores digitados pelo usuário em novaConta.UserName e novaConta.Password
-    // Depois de criar a conta, você pode redirecionar para outra página ou executar qualquer outra ação necessária
+            var user = new User
+            {
+                UserName = novaConta.UserName,
+                Password = novaConta.Password
+            };
+
+            var jsonContent = new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json");
+            var response = await HttpClient.PostAsync("/api/user", jsonContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                NavigationManager.NavigateTo("/Criar_Skill");
+            }
+            else
+            {
+                var errorResponse = await response.Content.ReadAsStringAsync();
+                var errorMessage = JsonSerializer.Deserialize<ErrorResponse>(errorResponse)?.Message;
+                // Faça o tratamento adequado do erro de acordo com a mensagem retornada
+            }
         }
         else
         {
-    // Aqui você pode adicionar lógica para tratar o caso em que as senhas não coincidem
-    // Por exemplo, exibindo uma mensagem de erro para o usuário ou limpando os campos de senha
+            // Senhas não coincidem
         }
+    }
+
+    public class User
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class ErrorResponse
+    {
+        public string Message { get; set; }
     }
 }

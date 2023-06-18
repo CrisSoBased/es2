@@ -6,9 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Entities;
 
-[Keyless]
+
 public partial class user
 {
+    
+    [Key]
     public int id_user { get; set; }
 
     [Column(TypeName = "character varying")]

@@ -6,10 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Entities;
 
-[Keyless]
+
 [Table("perfil")]
 public partial class perfil
 {
+   
+    [Key]
     public int id_perfil { get; set; }
 
     [Column(TypeName = "character varying")]

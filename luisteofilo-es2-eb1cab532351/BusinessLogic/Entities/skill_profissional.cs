@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Entities;
 
-[Keyless]
+
 [Table("skill_profissional")]
 public partial class skill_profissional
 {
+    
     public int id_perfil { get; set; }
-
+    [Key]
     public int id_skill { get; set; }
 }
