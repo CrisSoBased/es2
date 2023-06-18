@@ -1,0 +1,40 @@
+﻿@page "/Criar_Skill"
+@using System.Collections.Generic
+
+<h3>Criar Skill</h3>
+
+<div class="form-group">
+    <label for="nome">Nome da Skill:</label>
+    <input id="nome" class="form-control" @bind="@novaSkill.Nome" />
+</div>
+
+<div class="form-group">
+    <label for="areaProfissional">Área Profissional:</label>
+    <select id="areaProfissional" class="form-control" @bind="@novaSkill.AreaProfissional">
+        @foreach (var area in areasProfissionais)
+        {
+            <option value="@area">@area</option>
+        }
+    </select>
+</div>
+
+<button class="btn btn-primary" @onclick="CriarSkill">Criar</button>
+
+@code {
+    public Skill novaSkill { get; set; } = new Skill();
+    public List<string> areasProfissionais { get; set; } = new List<string> { "developers", "designers", "product managers", "project managers" };
+
+    public class Skill
+    {
+        public string Nome { get; set; }
+        public string AreaProfissional { get; set; }
+    }
+
+    private void CriarSkill()
+    {
+    // Aqui você pode adicionar a lógica para salvar a nova skill no banco de dados
+    // Por exemplo, usando um serviço de acesso a dados ou uma chamada de API
+    // Você pode acessar os valores digitados pelo usuário em novaSkill.Nome e novaSkill.AreaProfissional
+    // Depois de salvar a skill, você pode redirecionar para outra página ou executar qualquer outra ação necessária
+    }
+}

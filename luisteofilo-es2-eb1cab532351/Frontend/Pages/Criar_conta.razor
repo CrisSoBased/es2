@@ -1,0 +1,47 @@
+﻿@page "/Criar_conta"
+
+<h3>Criar Conta</h3>
+
+<div class="form-group">
+    <label for="userName">Nome de Usuário:</label>
+    <input id="userName" class="form-control" @bind="@novaConta.UserName" />
+</div>
+
+<div class="form-group">
+    <label for="password">Senha:</label>
+    <input id="password" type="password" class="form-control" @bind="@novaConta.Password" />
+</div>
+
+<div class="form-group">
+    <label for="confirmPassword">Confirmar Senha:</label>
+    <input id="confirmPassword" type="password" class="form-control" @bind="@confirmPassword" />
+</div>
+
+<button class="btn btn-primary" @onclick="CriarConta">Criar Conta</button>
+
+@code {
+    public Conta novaConta { get; set; } = new Conta();
+    public string confirmPassword { get; set; }
+
+    public class Conta
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+    }
+
+    private void CriarConta()
+    {
+        if (novaConta.Password == confirmPassword)
+        {
+    // Aqui você pode adicionar a lógica para criar a conta do usuário
+    // Por exemplo, usando um serviço de acesso a dados ou uma chamada de API
+    // Você pode acessar os valores digitados pelo usuário em novaConta.UserName e novaConta.Password
+    // Depois de criar a conta, você pode redirecionar para outra página ou executar qualquer outra ação necessária
+        }
+        else
+        {
+    // Aqui você pode adicionar lógica para tratar o caso em que as senhas não coincidem
+    // Por exemplo, exibindo uma mensagem de erro para o usuário ou limpando os campos de senha
+        }
+    }
+}
